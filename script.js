@@ -1,44 +1,49 @@
 const films = document.querySelector('.films')
-const posting = (film) => {
+const filmPosting = (film) => {
     const filmDiv = document.createElement('div')
     filmDiv.classList.add('film')
     filmDiv.innerHTML =
-        `<h2>Название фильма: ${film.title}</h2>
-        <p>Фильм создан: ${film.created}</p>
-        <p>Продюсер: ${film.producer}</p> 
         `
+        <h2>Название фильма: ${film.title}</h2>
+        <p>Продюсер: ${film.producer}</p>
+        <p>Фильм создан: ${film.created}</p>
+    
+        `
+
     films.append(filmDiv)
-}   
+}
 const filmLoading = () => {
     const divLoading = document.createElement('div')
     divLoading.classList.add('load')
     divLoading.innerHTML =
-        `<div class="load">load</div>`
+        `<div class="preloader">
+        <div class="loader"></div>
+      </div>`
 
     films.append(divLoading)
 }
-const loader = () => {
+const filmDelLoad = () => {
     const delLoad = document.querySelector('.load')
-    loader.innerHTML = ''
+    delLoad.innerHTML = ''
 }
-const errorl = () => {
-    const lerrDiv = document.createElement('div')
-    lerrDiv.classList.add('error')
-    lerrDiv.innerHTML =
+const filmError = () => {
+    const divErr = document.createElement('div')
+    divErr.classList.add('error')
+    divErr.innerHTML =
         `Ошибка загрузки`
-    films.append(lerrDiv)
+    films.append(divErr)
 }
 
-const post = async () => {
+const filmResponseAsy = async () => {
     filmLoading()
     try {
         const films = await fetch("https://swapi.dev/api/films")
-        const puto = await films.json()
-        output = puto.results.map(films => posting(films))
+        const filmJSON = await films.json()
+        inPrint = filmJSON.results.map(films => filmPosting(films))
     } catch (error) {
-        errorl()
+        filmError()
     } finally {
-        loader()
+        filmDelLoad()
     }
 }
-post()
+filmResponseAsy()
